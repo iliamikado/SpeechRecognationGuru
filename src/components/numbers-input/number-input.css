@@ -1,0 +1,19 @@
+.number-card {
+    font-size: 35px;
+    font-weight: 700;
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    margin: 2px;
+    border: solid gray;
+    border-radius: 5px;
+    vertical-align: bottom;
+}
+
+.right {
+    background-color: green;
+}
+
+.false {
+    background-color: red;
+}

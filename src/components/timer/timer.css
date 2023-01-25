@@ -1,0 +1,27 @@
+.timer-card {
+    font-weight: 500;
+    width: 100%;
+    height: 30px;
+    vertical-align: bottom;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.time {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    margin-left: 5px;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.time-scale {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(143, 255, 144);
+}

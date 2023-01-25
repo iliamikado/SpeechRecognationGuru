@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+  margin: auto;
+  max-width: 500px;
+  position: relative;
+  height: 90vh;
+}
+
+.game-field {
+  /* background-color:rgba(255, 0, 0, .5); */
+  position: absolute;
+  top: 110px;
+  bottom: 180px;
+  width: 100%;
+}
+
+.container {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.container::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
