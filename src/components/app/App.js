@@ -108,37 +108,10 @@ class App extends Component {
     });
   }
 
-  showFinalModal = () => {
-    this.setState({showFinalModal: true});
-  }
-
-  hideFinalModal = () => {
-    this.setState({showFinalModal: false});
-  }
-
-  showSettingsModal = () => {
-    this.setState({showSettingsModal: true});
-  }
-
-  hideSettingsModal = () => {
-    this.setState({showSettingsModal: false});
-  }
-
-  showInfoModal = () => {
-    this.setState({showInfoModal: true});
-  }
-
-  hideInfoModal = () => {
-    this.setState({showInfoModal: false});
-  }
-
-  showLeaderboardModal = () => {
-    this.setState({showLeaderboardModal: true});
-  }
-
-  hideLeaderboardModal = () => {
-    this.setState({showLeaderboardModal: false});
-  }
+  showFinalModal = (showFinalModal=true) => {this.setState({showFinalModal})}
+  showSettingsModal = (showSettingsModal=true) => {this.setState({showSettingsModal})}
+  showInfoModal = (showInfoModal=true) => {this.setState({showInfoModal})}
+  showLeaderboardModal = (showLeaderboardModal=true) => {this.setState({showLeaderboardModal})}
 
   setMySettings = ({countOfNumbers, gameDuratation}) => {
     this.setState({countOfNumbers, gameDuratation});
@@ -183,11 +156,11 @@ class App extends Component {
           }
         </div>
         {this.state.showFinalModal ? 
-          <FinalModal show={true} onHide={this.hideFinalModal} right={right} wrong={wrong} scores={this.state.scores} username={this.state.username} setUsername={this.setUsername}/>
+          <FinalModal show={true} onHide={() => this.showFinalModal(false)} right={right} wrong={wrong} scores={this.state.scores} username={this.state.username} setUsername={this.setUsername}/>
         :null}
-        <SettingsModal show={this.state.showSettingsModal} onHide={this.hideSettingsModal} setMySettings={this.setMySettings}/>
-        <InfoModal show={this.state.showInfoModal} onHide={this.hideInfoModal}/>
-        <LeaderboardModal show={this.state.showLeaderboardModal} onHide={this.hideLeaderboardModal} scores={this.state.scores}/>
+        <SettingsModal show={this.state.showSettingsModal} onHide={() => this.showSettingsModal(false)} setMySettings={this.setMySettings}/>
+        <InfoModal show={this.state.showInfoModal} onHide={() => this.showInfoModal(false)}/>
+        <LeaderboardModal show={this.state.showLeaderboardModal} onHide={() => this.showLeaderboardModal(false)} scores={this.state.scores}/>
         <Keyboard/>
       </div>
     );
