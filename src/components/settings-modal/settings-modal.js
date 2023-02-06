@@ -58,7 +58,8 @@ class SettingsModal extends Component {
 
         return (
             <Modal
-                    {...this.props}
+                    show={this.props.show}
+                    onHide={this.props.onHide}
                     size="sm"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered>

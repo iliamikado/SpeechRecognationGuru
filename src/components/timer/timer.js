@@ -6,32 +6,36 @@ class Timer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            seconds: props.gameDuratation * 100
+            miliseconds: 0
         }
     }
 
     componentDidMount() {
-        setTimeout(this.updateTimer, 1000);
+        this.duratationMs = this.props.gameDuratation * 1000;
+        this.startMs = new Date();
+        this.updateTimer();
+        this.myUpdater = setInterval(this.updateTimer, 100);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.myUpdater);
     }
 
     updateTimer = () => {
-        this.setState(({seconds}) => {
-            if (seconds > 0) {
-                return {seconds: seconds - 1};
-            } else {
-                this.props.endGame();
-            }
-        });
-        setTimeout(this.updateTimer, 10);
+        const passTime = new Date() - this.startMs;
+        if (passTime > this.duratationMs) {
+            this.props.endGame();
+        }
+        this.setState({miliseconds: this.duratationMs - passTime});
     }
 
     render() {
-        const width = this.state.seconds / this.props.gameDuratation;
+        const width = this.state.miliseconds / this.duratationMs * 100;
 
         return (
             <div className="timer-card">
                 <div className="time-scale" style={{"width": width + "%"}}></div>
-                <p className="time">{this.state.seconds / 100}</p>
+                <p className="time">{Math.floor(this.state.miliseconds / 10) / 100}</p>
             </div>
         );
     }

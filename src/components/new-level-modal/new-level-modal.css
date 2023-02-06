@@ -1,0 +1,61 @@
+
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.replay {
+    width: 60px;
+    height: 50px;
+}
+.replay img {
+    width: 80%;
+}
+
+.next {
+    margin-left: 10px;
+}
+
+.next img {
+    height: 100%;
+}
+
+.trophy img {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+}
+
+.trophy {
+    display: flex;
+    width: 100%;
+}
+
+.stars img {
+    width: 30px;
+    margin: 5px;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+}
+
+.give-up {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: gray;
+    margin: 5px;
+}
+
+.give-up:hover {
+    cursor: pointer;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+}

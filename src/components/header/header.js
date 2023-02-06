@@ -17,11 +17,11 @@ class Header extends Component {
 
                 </div> */}
                 <p className="inline-block">
-                    speech & memory
+                    {this.props.title}
                 </p>
-                <div className="inline-block icon-button" style={{"float": "right"}}>
+                {/* <div className="inline-block icon-button" style={{"float": "right"}}>
                     <img src={settingsIcon} alt="Settings" onClick={this.props.openSettings} title="settings"></img>
-                </div>
+                </div> */}
                 <div className="inline-block icon-button" style={{"float": "right"}}>
                     <img src={cupIcon} alt="leaderboard" onClick={this.props.openLeaderboard} title="leaderboard"></img>
                 </div>

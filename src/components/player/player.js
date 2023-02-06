@@ -1,13 +1,4 @@
-import sound0 from '../../sounds/en_num_0.mp3';
-import sound1 from '../../sounds/en_num_01.mp3';
-import sound2 from '../../sounds/en_num_02.mp3';
-import sound3 from '../../sounds/en_num_03.mp3';
-import sound4 from '../../sounds/en_num_04.mp3';
-import sound5 from '../../sounds/en_num_05.mp3';
-import sound6 from '../../sounds/en_num_06.mp3';
-import sound7 from '../../sounds/en_num_07.mp3';
-import sound8 from '../../sounds/en_num_08.mp3';
-import sound9 from '../../sounds/en_num_09.mp3';
+import ending from '../../sounds/ending.mp3';
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -18,22 +9,16 @@ function getRandomInt(min, max) {
 class Player {
     constructor(countOfNumbers, setAnswer) {
         this.numSounds = [];
-        this.numSounds.push(sound0);
-        this.numSounds.push(sound1);
-        this.numSounds.push(sound2);
-        this.numSounds.push(sound3);
-        this.numSounds.push(sound4);
-        this.numSounds.push(sound5);
-        this.numSounds.push(sound6);
-        this.numSounds.push(sound7);
-        this.numSounds.push(sound8);
-        this.numSounds.push(sound9);
+        for (let i = 0; i < 100; ++i) {
+            this.numSounds.push(require(`../../sounds/en_num_${i}.mp3`));
+        }
         
         this.countOfNumbers = countOfNumbers;
         this.currentSound = 0;
         this.answer = [];
         this.setAnswer = setAnswer;
         this.stopped = false;
+        this.mode = 'SINGLE';
     }
 
     play = () => {
@@ -51,17 +36,94 @@ class Player {
         this.countOfNumbers = n;
     }
 
+    setMode = (mode) => {
+        this.mode = mode;
+    }
+
     playNext = () => {
         if (this.stopped) {
             return;
         }
         if (this.currentSound < this.countOfNumbers) {
-            const number = getRandomInt(0, 9);
-            this.answer.push(number);
-            const word = new Audio(this.numSounds[number]);
-            word.play();
-            word.addEventListener('ended', this.playNext)
-            this.currentSound++;
+            let number;
+            let word;
+            switch (this.mode) {
+                case 'SINGLE':
+                    number = getRandomInt(0, 9);
+                    this.answer.push(number);
+                    word = new Audio(this.numSounds[number]);
+                    word.play();
+                    word.addEventListener('ended', this.playNext)
+                    this.currentSound++;
+                    break;
+                case '10-20':
+                    number = getRandomInt(10, 20);
+                    this.answer.push(Math.floor(number / 10));
+                    this.answer.push(number % 10);
+                    word = new Audio(this.numSounds[number]);
+                    word.play();
+                    word.addEventListener('ended', this.playNext)
+                    this.currentSound += 2;
+                    break;
+                case 'TY':
+                    number = getRandomInt(1, 9) * 10;
+                    this.answer.push(Math.floor(number / 10));
+                    this.answer.push(number % 10);
+                    word = new Audio(this.numSounds[number]);
+                    word.play();
+                    word.addEventListener('ended', this.playNext)
+                    this.currentSound += 2;
+                    break;
+                case 'TEEN_AND_TY':
+                    number = getRandomInt(1, 9);
+                    if (Math.random() > 0.5) {
+                        number += 10;
+                    } else {
+                        number *= 10;
+                    }
+                    this.answer.push(Math.floor(number / 10));
+                    this.answer.push(number % 10);
+                    word = new Audio(this.numSounds[number]);
+                    word.play();
+                    word.addEventListener('ended', this.playNext)
+                    this.currentSound += 2;
+                    break;
+                case 'DOUBLE':
+                    number = getRandomInt(10, 99);
+                    this.answer.push(Math.floor(number / 10));
+                    this.answer.push(number % 10);
+                    word = new Audio(this.numSounds[number]);
+                    word.play();
+                    word.addEventListener('ended', this.playNext)
+                    this.currentSound += 2;
+                    break;
+                case 'ALL':
+                    number = getRandomInt(0, 99);
+                    if (this.currentSound + 2 > this.countOfNumbers) {
+                        number %= 10;
+                    }
+                    if (number > 9) {
+                        this.answer.push(Math.floor(number / 10));
+                    }
+                    this.answer.push(number % 10);
+                    word = new Audio(this.numSounds[number]);
+                    word.play();
+                    word.addEventListener('ended', this.playNext)
+                    if (number > 9) {
+                        this.currentSound += 2;
+                    } else {
+                        this.currentSound += 1;
+                    }
+                    break;
+                case 'FUN':
+                    this.answer = [4, 4, 4];
+                    word = new Audio(ending);
+                    word.play();
+                    word.addEventListener('ended', this.playNext)
+                    this.currentSound += 3;
+                    break;
+
+            }
         } else {
             this.setAnswer(this.answer);
         }

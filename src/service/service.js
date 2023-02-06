@@ -13,6 +13,28 @@ function putResource(path="", obj) {
     fetch(url + path + obj.id, {method: 'PUT', body: JSON.stringify(obj), headers: {'Content-Type': 'application/json'}});
 }
 
+function sendNewResult(obj) {
+    getResource('scores/' + obj.id).then(data => {
+        let levels = [];
+        if (!data.levels) {
+            levels[obj.level] = {score: obj.score, stars: obj.stars};
+            postResource('scores/', {
+                id: obj.id,
+                levels: levels
+            });
+        } else {
+            levels = data.levels;
+            if (!levels[obj.level] || obj.score > levels[obj.level].score) {
+                levels[obj.level] = {score: obj.score, stars: obj.stars};
+            }
+            putResource('scores/', {
+                id: obj.id,
+                levels: levels
+            });
+        }
+    });
+}
+
 function deleteAll() {
     getResource('scores').then(data => {
         data.forEach(({id}) => {
@@ -21,4 +43,4 @@ function deleteAll() {
     });
 }
 
-export {putResource, getResource, postResource};
+export {putResource, getResource, postResource, sendNewResult};
